@@ -1,0 +1,25 @@
+{
+  "name": "lightbox",
+  "version": "1.0.0",
+  "description": "A small lightweight chat client. ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thatguybrendan/lightbox.git"
+  },
+  "author": "Brendan Hall-Hern",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thatguybrendan/lightbox/issues"
+  },
+  "homepage": "https://github.com/thatguybrendan/lightbox#readme",
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "ts-node": "^10.9.2",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.5"
+  }
+}
