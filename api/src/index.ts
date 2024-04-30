@@ -1,30 +1,47 @@
-"use strict";
+import Fastify, { FastifyRequest, FastifyReply } from "fastify";
+import routes from "./routes";
+import "./types/fastifyTypes";
 
-const Hapi = require("@hapi/hapi");
+const app = Fastify({ logger: true }); // you can disable logging
 
-const init = async () => {
-  require("@dotenvx/dotenvx").config();
+// Register Auth middleware
+app.register(require("./middlewares/auth"));
 
-  const server = Hapi.server({
+// Register Routes
+app.register(routes);
+
+/**
+ * Parse Request Body as JSON
+ */
+app.addContentTypeParser(
+  "application/json",
+  { parseAs: "string" },
+  (req, body: string, done) => {
+    try {
+      const json = JSON.parse(body);
+      done(null, json);
+    } catch (err: any) {
+      err.statusCode = 400;
+      done(err, undefined);
+    }
+  },
+);
+
+// graceful shutdown
+const listeners = ["SIGINT", "SIGTERM"];
+listeners.forEach((signal) => {
+  process.on(signal, async () => {
+    await app.close();
+    process.exit(0);
+  });
+});
+
+// Start the server
+async function main() {
+  await app.listen({
     port: 3000,
     host: "0.0.0.0",
   });
+}
 
-  server.route({
-    method: "GET",
-    path: "/",
-    handler: (_request: Request) => {
-      return "Hello World!";
-    },
-  });
-
-  await server.start();
-  console.log("Server running on %s", server.info.uri);
-};
-
-process.on("unhandledRejection", (err) => {
-  console.log(err);
-  process.exit(1);
-});
-
-init();
+main();

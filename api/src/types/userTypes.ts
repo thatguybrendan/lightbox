@@ -1,15 +1,22 @@
-export interface Customer {
-  id?: number;
+export type Customer = {
+  id: number;
   name: string;
   email: string;
-  isAdmin: boolean;
-}
+  isAdmin?: boolean;
+};
 
-export interface Rep {
-  id?: number;
+export type Rep = {
+  id: number;
   name: string;
   email: string;
-  isAdmin: boolean;
-}
+  isAdmin?: true;
+};
 
 export type User = Customer | Rep;
+export type NewUser = Omit<User, "id"> & { password: string };
+export class UserNotFoundError extends Error {
+  constructor() {
+    super("User not found");
+    this.name = "UserNotFoundError";
+  }
+}
