@@ -15,9 +15,11 @@ const setCookie = (reply: FastifyReply, user: User, token: string) => {
   });
 };
 
-export const getUserById = async (req: { params: { id: string } }) => {
-  const id = parseInt(req.params.id);
-  const user = await userService.getUserById(id);
+export const getUserById = async (
+  req: FastifyRequest<{ Params: { userId: string } }>,
+) => {
+  const userId = Number(req.params.userId);
+  const user = await userService.getUserById(userId);
   return user;
 };
 

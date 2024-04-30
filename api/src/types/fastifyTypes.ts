@@ -11,6 +11,8 @@ declare module "fastify" {
   }
   export interface FastifyInstance {
     authenticate: any;
+    userHasPermissionToConversation: any;
+    userHasPermissionToUserInfo: any;
     authenticateBasic: any;
     unsignCookie: any;
   }

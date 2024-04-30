@@ -7,6 +7,10 @@ const app = Fastify({ logger: true }); // you can disable logging
 // Register Auth middleware
 app.register(require("./middlewares/auth"));
 
+// Register Permissions middleware
+app.register(require("./middlewares/permissions/conversationPermissions"));
+app.register(require("./middlewares/permissions/userPermissions"));
+
 // Register Routes
 app.register(routes);
 

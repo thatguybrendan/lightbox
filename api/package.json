@@ -22,11 +22,13 @@
     "@fastify/jwt": "^8.0.0",
     "@prisma/client": "5.13.0",
     "@types/bcrypt": "^5.0.2",
+    "@types/http-errors": "^2.0.4",
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
     "bcrypt": "^5.1.1",
     "fastify": "^4.26.2",
     "fastify-plugin": "^4.5.1",
+    "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
     "tsc": "^2.0.4",
     "typescript": "^5.4.5"

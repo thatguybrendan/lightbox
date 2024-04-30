@@ -67,9 +67,15 @@ const authenticate = async (email: string, password: string) => {
     throw new UserNotFoundError();
   }
 
-  // In this one case, we can keep the isAdmin field.
-  // This should only ever be used internally, not sent to the client.
-  return { ...exclude(user), isAdmin: user.isAdmin };
+  return exclude(user);
+};
+
+const userIsAdmin = async (id: User["id"]): Promise<boolean> => {
+  const user = await prisma.user.findUnique({ where: { id } });
+  if (!user) {
+    throw new UserNotFoundError();
+  }
+  return user.isAdmin;
 };
 
 export default {
@@ -79,4 +85,5 @@ export default {
   userExists,
   createUser,
   authenticate,
+  userIsAdmin,
 };

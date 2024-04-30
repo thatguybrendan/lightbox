@@ -7,14 +7,14 @@ export async function messageRoutes(app: FastifyInstance) {
   app.get(
     "/messages",
     {
-      preHandler: app.authenticate,
+      onRequest: app.authenticate,
     },
     getMessagesForConversation,
   );
   app.post(
     "/messages",
     {
-      preHandler: app.authenticate,
+      onRequest: app.authenticate,
     },
     createMessage,
   );

@@ -17,7 +17,7 @@ export default fp(async (app: FastifyInstance) => {
   app.register(require("@fastify/cookie"), {
     secret: "some-secret-key", // TODO: use env file
   });
-  app.addHook("preHandler", (req, res, next) => {
+  app.addHook("onRequest", (req, res, next) => {
     req.jwt = app.jwt;
     req.unsignCookie = app.unsignCookie;
     return next();
