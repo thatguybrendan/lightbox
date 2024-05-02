@@ -12,7 +12,7 @@ export async function userRoutes(app: FastifyInstance) {
   app.post(
     "/login",
     {
-      onRequest: app["authenticateBasic"],
+      preHandler: app["authenticateBasic"],
     },
     authenticateUser,
   );

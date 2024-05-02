@@ -1,4 +1,6 @@
 import Fastify, { FastifyRequest, FastifyReply } from "fastify";
+import cors from "@fastify/cors";
+
 import routes from "./routes";
 import "./types/fastifyTypes";
 
@@ -10,6 +12,11 @@ app.register(require("./middlewares/auth"));
 // Register Permissions middleware
 app.register(require("./middlewares/permissions/conversationPermissions"));
 app.register(require("./middlewares/permissions/userPermissions"));
+
+// Register CORS
+app.register(cors, {
+  origin: "http://localhost:5173",
+});
 
 // Register Routes
 app.register(routes);
