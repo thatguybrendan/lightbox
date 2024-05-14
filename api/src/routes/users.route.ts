@@ -3,11 +3,16 @@ import {
   createUser,
   authenticateUser,
   getUserById,
+  getUser,
 } from "../controllers/userController";
 export async function userRoutes(app: FastifyInstance) {
-  app.get("/", (req: FastifyRequest, reply: FastifyReply) => {
-    reply.send({ message: "/ route hit" });
-  });
+  app.get(
+    "/",
+    {
+      onRequest: app.authenticate,
+    },
+    getUser,
+  );
   app.post("/register", createUser);
   app.post(
     "/login",

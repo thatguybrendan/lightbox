@@ -1,23 +1,40 @@
+import { useState } from "react";
+
 import { useForm, SubmitHandler } from "react-hook-form";
 
 import "./signInModal.css";
 
 import { useSignIn } from "../../hooks/useSignIn";
-
+import { useGetSelf } from "../../hooks/useGetSelf";
+import { UnauthorizedError } from "../../types/httpErrors";
 type Inputs = {
   email: string;
   password: string;
 };
 
 const SignInModal = () => {
+  const [visible, setVisible] = useState(false);
   const handleSignIn = useSignIn();
-
+  const { data: user, error } = useGetSelf();
+  console.log(error);
+  if (error instanceof UnauthorizedError && !visible) {
+    setVisible(true);
+  }
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => handleSignIn.mutate(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    handleSignIn.mutate(data, {
+      onSuccess: () => {
+        console.log("success");
+      },
+      onError: () => {
+        console.log("error");
+      },
+    });
+  };
 
   /**
    * To activate the modal, make the target in the url #signin-modal.
@@ -36,7 +53,10 @@ const SignInModal = () => {
         </div>
       </div>
 
-      <div id="signin-modal" className="modal-window">
+      <div
+        id="signin-modal"
+        className={visible ? "modal-window visible" : "modal-window"}
+      >
         <div>
           <h1>Voilà!</h1>
           <div>

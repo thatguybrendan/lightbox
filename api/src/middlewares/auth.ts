@@ -35,7 +35,7 @@ export default fp(async (app: FastifyInstance) => {
         req.user = user;
       } catch (error) {
         if (error instanceof UserNotFoundError) {
-          return reply.code(404);
+          return reply.code(404).send({ message: "user.not.found" });
         }
       }
     },
@@ -44,11 +44,11 @@ export default fp(async (app: FastifyInstance) => {
   app.decorate(
     "authenticate",
     async (req: FastifyRequest, reply: FastifyReply) => {
-      const { value: token } = req.unsignCookie(req.cookies.access_token);
-      if (!token) {
-        return reply.status(401).send({ message: "Authentication required" });
-      }
       try {
+        const { value: token } = req.unsignCookie(req.cookies.access_token);
+        if (!token) {
+          return reply.status(401).send({ message: "Authentication required" });
+        }
         // here decoded will be a different type by default but we want it to be of user-payload type
         const decoded = req.jwt.verify<FastifyJWT["user"]>(token);
         req.user = decoded;

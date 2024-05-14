@@ -1,21 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { post } from "../utils/post";
-const postData = async (data: {
-  email: string;
-  password: string;
-}): Promise<{ id: number; email: string }> => {
-  const { email, password } = data;
-  const response = await post("user/login", { email, password });
-  return response.json();
-};
+import { signIn } from "../api/userApi";
 
 export const useSignIn = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: postData,
-    onSuccess(data, variables, context) {
-      console.log("onSuccess", data, variables, context);
+    mutationFn: signIn,
+    onSuccess(data) {
       queryClient.setQueryData(["user"], data);
     },
   });

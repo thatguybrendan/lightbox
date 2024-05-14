@@ -6,12 +6,12 @@ import userService from "../services/userService";
 
 const setCookie = (reply: FastifyReply, user: User, token: string) => {
   reply.setCookie("access_token", token, {
-    domain: "your.domain", // Use ENV file.
-    path: "/",
+    // domain: ".local", // Use ENV file.
+    // path: "/",
     signed: true,
-    secure: true, // send cookie over HTTPS only
-    httpOnly: true,
-    sameSite: true, // alternative CSRF protection
+    // secure: true, // send cookie over HTTPS only
+    // httpOnly: true,
+    // sameSite: true, // alternative CSRF protection
   });
 };
 
@@ -21,6 +21,12 @@ export const getUserById = async (
   const userId = Number(req.params.userId);
   const user = await userService.getUserById(userId);
   return user;
+};
+
+export const getUser = async (req: FastifyRequest, reply: FastifyReply) => {
+  const userId = Number(req.user.id);
+  const user = await userService.getUserById(userId);
+  return reply.send({ ...user });
 };
 
 export async function authenticateUser(
