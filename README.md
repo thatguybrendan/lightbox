@@ -20,6 +20,10 @@ lightbox
 │   │   └── main.tsx
 │   └── dist
 └── api
-
-
 ```
+
+## TODO
+
+- This needs unit tests.
+- This documentation should be updated.
+- The frontend is in need of chat components still.
