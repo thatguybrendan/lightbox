@@ -15,7 +15,7 @@ type Inputs = {
 const SignInModal = () => {
   const [visible, setVisible] = useState(false);
   const handleSignIn = useSignIn();
-  const { data: user, error } = useGetSelf();
+  const { error } = useGetSelf();
   console.log(error);
   if (error instanceof UnauthorizedError && !visible) {
     setVisible(true);
