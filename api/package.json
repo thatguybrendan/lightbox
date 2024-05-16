@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node dist/index.js",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.prod.json",
     "dev": "ts-node src/index.ts",
     "dotenvx-test": "dotenvx run -f .env.test -- yarn run jest --verbose",
     "test": "yarn dotenvx-test",
