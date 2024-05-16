@@ -28,6 +28,10 @@ RUN --mount=type=bind,source=package.json,target=package.json \
 # Copy the rest of the source files into the image.
 COPY . .
 
+# Generate Prisma client
+# Since we're doing a production install in the run command above, we need to generate the prisma client here.
+RUN npx prisma generate
+
 RUN yarn build
 
 # Run the application as a non-root user.
