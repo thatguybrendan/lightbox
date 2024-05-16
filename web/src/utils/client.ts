@@ -6,7 +6,7 @@
  */
 import { throwHttpError } from "../types/httpErrors";
 
-const baseURL = "http://localhost:3000/api/";
+const baseURL = "http://localhost:8080/api/";
 export async function get(path = "") {
   const url = new URL(path, baseURL);
   const response = await fetch(url, {
