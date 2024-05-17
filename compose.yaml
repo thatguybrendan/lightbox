@@ -13,6 +13,8 @@ services:
       context: ./api
     environment:
       NODE_ENV: production
+      # TODO: Move this literally anywhere else.
+      DATABASE_URL: postgresql://postgres:example@db:5432/lightbox_data
     ports:
       - 8080:8080
     develop:
